@@ -1,31 +1,33 @@
 package com.example.bookmyshowJune.Models;
 
-
-import com.example.bookmyshowJune.Enums.SeatType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "theater_seats")
+@Table(name="users")
 @Data
-public class TheaterSeat {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    private String seatNo;
+    private String name;
 
-    private SeatType seatType;
+    private Integer age;
 
-    @ManyToOne
-    @JoinColumn
-    private Theater theater;
+    private String mobNo;
+
+    private String email;
 
 }
