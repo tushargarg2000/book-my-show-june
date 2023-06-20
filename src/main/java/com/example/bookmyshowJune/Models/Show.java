@@ -1,10 +1,7 @@
 package com.example.bookmyshowJune.Models;
 
 
-import com.example.bookmyshowJune.Enums.SeatType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,19 +10,25 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 @Entity
-@Table(name = "theater_seats")
+@Table(name="shows")
 @Data
-public class TheaterSeat {
+public class Show {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    private String seatNo;
+    private LocalTime time;
 
-    @Enumerated(value = EnumType.STRING)
-    private SeatType seatType;
+    private Date date;
+
+    @ManyToOne
+    @JoinColumn
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn

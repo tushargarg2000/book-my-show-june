@@ -3,17 +3,12 @@ package com.example.bookmyshowJune.Models;
 
 import com.example.bookmyshowJune.Enums.Genre;
 import com.example.bookmyshowJune.Enums.Language;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -40,5 +35,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Language language;
 
+    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL)
+    private List<Show> showList = new ArrayList<>();
 
 }
