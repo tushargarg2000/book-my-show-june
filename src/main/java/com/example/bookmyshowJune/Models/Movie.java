@@ -4,7 +4,10 @@ package com.example.bookmyshowJune.Models;
 import com.example.bookmyshowJune.Enums.Genre;
 import com.example.bookmyshowJune.Enums.Language;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +16,9 @@ import java.util.List;
 @Entity
 @Table(name = "movies")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Movie {
 
     @Id
