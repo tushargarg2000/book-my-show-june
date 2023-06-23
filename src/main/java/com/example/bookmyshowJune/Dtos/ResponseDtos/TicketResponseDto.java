@@ -15,6 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class TicketResponseDto {
 
+    private String responseMessage;
+
     private LocalTime showTime;
     private Date showDate;
 
@@ -26,4 +28,5 @@ public class TicketResponseDto {
 
     private String location;
 
+    private int totalPrice;
 }

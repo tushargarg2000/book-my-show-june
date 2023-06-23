@@ -13,6 +13,8 @@ import com.example.bookmyshowJune.Repository.ShowRepository;
 import com.example.bookmyshowJune.Repository.TicketRepository;
 import com.example.bookmyshowJune.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class TicketService {
 
         @Autowired
         private TicketRepository ticketRepository;
+
+        @Autowired
+        private JavaMailSender emailSender;
 
         public TicketResponseDto bookTicket(TicketRequestDto ticketRequestDto)throws NoUserFoundException, ShowNotFound,Exception {
 
@@ -69,6 +74,9 @@ public class TicketService {
 
                 User user = userOptional.get();
 
+                ticket.setUser(user);
+                ticket.setShow(show);
+
                 ticket = ticketRepository.save(ticket);
 
                 user.getTicketList().add(ticket);
@@ -80,6 +88,24 @@ public class TicketService {
 
                 showRepository.save(show);
 
+
+                //We can send a mail to the person
+                SimpleMailMessage simpleMessageMail = new SimpleMailMessage();
+
+                String body = "Hi "+user.getName()+" ! \n"+
+                        "You have successfully booked a ticket. Please find the following details"+
+                        "booked seat No's"  + bookedSeats
+                        +"movie Name" + show.getMovie().getMovieName()
+                        +"show Date is "+show.getDate()+
+                        "And show time is "+show.getTime()+
+                        "Enjoy the Show !!!";
+
+                simpleMessageMail.setSubject("Ticket Confirmation Mail");
+                simpleMessageMail.setFrom("springacciojob@gmail.com");
+                simpleMessageMail.setText(body);
+                simpleMessageMail.setTo(user.getEmail());
+
+                emailSender.send(simpleMessageMail);
 
 
                 return createTicketReponseDto(show,ticket);
@@ -136,6 +162,7 @@ public class TicketService {
                         .movieName(show.getMovie().getMovieName())
                         .showDate(show.getDate())
                         .showTime(show.getTime())
+                        .totalPrice(ticket.getTotalTicketsPrice())
                         .build();
 
                 return ticketResponseDto;
